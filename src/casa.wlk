@@ -1,8 +1,10 @@
 import cosas.*
+import cuentasBancarias.*
 
 object casaDePepeYJulian {
 
 	const cosas = []
+	var property cuenta
 
 	/*
 	 * Devuelvo una lista de las cosas que hay en la casa.
@@ -16,6 +18,7 @@ object casaDePepeYJulian {
 	 */
 	method comprar(cosa) {
 		cosas.add(cosa)
+		self.gastar(cosa.precio())
 	}
 
 	/*
@@ -79,6 +82,18 @@ object casaDePepeYJulian {
 	 */
 	method faltaComida() {
 		return cosas.count{ cosa => cosa.esComida() } < 2
+	}
+	
+	/*
+	 * Cuentas bancarias.
+	 */
+	
+	method gastar(importe) {
+		cuenta.extraer(importe)
+	}
+	
+	method dineroDisponible() {
+		return cuenta.saldo()
 	}
 
 }

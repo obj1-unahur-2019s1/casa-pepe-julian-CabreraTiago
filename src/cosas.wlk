@@ -64,11 +64,10 @@ object compu {
 
 // Revisar
 object packComida {
-	var platos = [tiraDeAsado, paqueteDeFideos, milanesas]
-	var aderezos = [salsaTomate, kiloCebollas]
-	var pack = [platos.anyOne(), aderezos.anyOne()]
+	var plato = paqueteDeFideos
+	var aderezo = salsaTomate
 
-	method precio() { return pack.sum{ comida => comida.precio() } }
+	method precio() { return plato.precio() + aderezo.precio() }
 	method esComida() { return true }
 	method esElectrodomestico() { return false }
 }

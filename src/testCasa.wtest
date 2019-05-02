@@ -1,0 +1,61 @@
+import casa.*
+import cosas.*
+import cuentasBancarias.*
+
+test "test_cuenta_bancaria" {
+
+	cuentaCorriente.depositar(3000)
+	cuentaConGastos.depositar(200020)
+	
+	assert.equals(3000, cuentaCorriente.saldo())
+	assert.equals(200000, cuentaConGastos.saldo())
+	
+	cuentaCombinada.agregarCuenta(cuentaCorriente)
+	cuentaCombinada.agregarCuenta(cuentaConGastos)
+	
+	assert.equals(203000, cuentaCombinada.saldo())
+	
+	cuentaCombinada.depositar(1000)
+	assert.equals(4000, cuentaCorriente.saldo())
+	
+	cuentaCombinada.extraer(500)
+	assert.equals(3500, cuentaCorriente.saldo())
+	
+	cuentaCombinada.extraer(10000)
+	assert.equals(3500, cuentaCorriente.saldo())
+	assert.equals(189800, cuentaConGastos.saldo())	
+
+}
+
+test "test_casa" {
+	
+	var casa = casaDePepeYJulian
+	var electrodomesticos = [heladera, microondas]
+	
+	casa.cuenta(cuentaCorriente)
+	assert.equals(0, casa.dineroDisponible())
+	
+	casa.cuenta().depositar(500000)
+	assert.equals(500000, casa.dineroDisponible())
+	
+	casa.comprar(heladera)
+	assert.equals(480000, casa.dineroDisponible())
+	
+	casa.comprar(tiraDeAsado)
+	casa.comprar(microondas)
+	casa.comprar(compu)
+	casa.comprar(cama)
+	casa.comprar(milanesas)
+	
+	assert.equals(6, casa.cantidadDeCosasCompradas())
+	assert.equals(true, casa.tieneComida())
+	assert.equals(false, casa.vieneDeEquiparse())
+	assert.equals(true, casa.esDerrochona())
+	assert.equals(compu, casa.compraMasCara())
+	assert.equals(electrodomesticos, casa.electrodomesticosComprados())
+	assert.equals(false, casa.malaEpoca())
+	assert.equals(false, casa.faltaComida())
+	
+	assert.equals(444690, casa.dineroDisponible())
+	
+}
